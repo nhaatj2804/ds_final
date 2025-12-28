@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}B22DCAT208 Nguyễn Ngọc Nhật{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background:
+        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
+        url("https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bcae-07a3f8dc141a/f6d7434e-d6de-4185-a6d4-c77a2d08737b/US-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    /* LOGO */
+    .netflix-logo {
+      position: absolute;
+      top: 24px;
+      left: 32px;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: #E50914;
+      font-family: 'Arial Black', Arial, sans-serif;
+    }
+
+    /* LOGIN CARD */
+    .login-container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-box {
+      background: rgba(0,0,0,.75);
+      padding: 60px 68px 40px;
+      width: 100%;
+      max-width: 450px;
+      border-radius: 4px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 28px;
+    }
+
+    .form-control {
+      width: 100%;
+      height: 50px;
+      margin-bottom: 16px;
+      background: #333;
+      border: none;
+      color: #fff;
+      padding: 0 16px;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    .form-control:focus {
+      background: #454545;
+      outline: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      margin-top: 24px;
+      background: #E50914;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #f40612;
+    }
+
+    .error {
+      color: #e87c03;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="netflix-logo">B22DCAT208</div>
+
+  <div class="login-container">
+    <div class="login-box">
+
+      <h1>Sign In</h1>
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form action="/login" method="post">
+        <input class="form-control"
+               name="username"
+               type="text"
+               placeholder="Email or phone number"
+               required>
+
+        <input class="form-control"
+               name="password"
+               type="password"
+               placeholder="Password"
+               required>
+
+        <button class="submit-btn" type="submit">Sign In</button>
+      </form>
+
+    </div>
+  </div>
+
+</body>
+</html>

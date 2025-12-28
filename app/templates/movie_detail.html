@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  /* ===== PAGE BACKGROUND ===== */
+  body {
+    background-color: #000;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  /* ===== LAYOUT ===== */
+  .movie-detail-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 768px) {
+    .movie-detail-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  /* ===== POSTER ===== */
+  .poster-wrapper img {
+    width: 420px;
+    max-width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  }
+
+  /* ===== INFO ===== */
+  .info-wrapper {
+    flex: 1;
+    color: #fff;
+  }
+
+  .movie-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .meta-line {
+    color: #bcbcbc;
+    margin-bottom: 20px;
+  }
+
+  .overview {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+  }
+
+  .extra-details {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+  }
+
+  .extra-details span {
+    color: #d2d2d2;
+  }
+
+  /* ===== RATING ===== */
+  .rating-box {
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 4px;
+    display: inline-flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .rating-input {
+    background: #000;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 8px;
+    width: 60px;
+  }
+
+  .rate-btn {
+    background: #E50914;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .rate-btn:hover {
+    background: #f40612;
+  }
+</style>
+
+<!-- ===== BACKGROUND FALLBACK SCRIPT ===== -->
+<script>
+  (function () {
+    const images = [
+      {% if movie.backdrop_path %}
+        "https://image.tmdb.org/t/p/original{{ movie.backdrop_path }}",
+      {% endif %}
+      {% if movie.poster_path %}
+        "https://image.tmdb.org/t/p/original{{ movie.poster_path }}",
+      {% endif %}
+      "{{ url_for('static', path='poster/default_poster.png') }}"
+    ];
+
+    function loadBg(i) {
+      if (i >= images.length) return;
+      const img = new Image();
+      img.onload = () => {
+        document.body.style.backgroundImage =
+          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('" + images[i] + "')";
+      };
+      img.onerror = () => loadBg(i + 1);
+      img.src = images[i];
+    }
+
+    loadBg(0);
+  })();
+</script>
+
+<div class="movie-detail-container">
+
+  <!-- POSTER -->
+  <div class="poster-wrapper">
+    <img
+      src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+      alt="{{ movie.title }}"
+      onerror="this.onerror=null; this.src='{{ url_for('static', path='poster/default_poster.png') }}';">
+  </div>
+
+  <!-- INFO -->
+  <div class="info-wrapper">
+    <h1 class="movie-title">{{ movie.title }}</h1>
+
+    <div class="meta-line">
+      <span>{{ movie.runtime }} min</span>
+    </div>
+
+    <div class="overview">
+      {{ movie.overview }}
+    </div>
+
+    <div class="extra-details">
+      Genres: <span>{{ genres }}</span>
+    </div>
+
+    <div class="extra-details">
+      Keywords: <span>{{ keywords }}</span>
+    </div>
+
+    <div class="rating-box">
+      {% if user_rating %}
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-check-circle" style="color: #46d369; font-size: 20px;"></i>
+          <span style="font-weight: bold; color: #fff;">
+            You rated this title: <span style="color: #E50914; font-size: 1.2em;">{{ user_rating }}</span>
+          </span>
+        </div>
+
+      {% else %}
+        <span>Rate this title:</span>
+        <form action="/rate" method="post" style="display:flex; gap:10px;">
+          <input type="hidden" name="movieId" value="{{ movie.id }}">
+          <input class="rating-input" name="rating" type="number" step="0.5" min="0" max="5" required>
+          <button class="rate-btn">Submit</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

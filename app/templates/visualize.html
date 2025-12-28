@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  /* ===== PAGE TITLE ===== */
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  /* ===== GRID LAYOUT (UPDATED) ===== */
+  .viz-grid {
+    display: grid;
+    /* CHANGED: This creates two equal columns */
+    grid-template-columns: 1fr 1fr; 
+    gap: 40px; 
+  }
+
+  /* ===== CARD ===== */
+  .viz-card {
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 6px;
+    padding: 25px; /* Added slightly more padding */
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  }
+
+  .viz-card h3 {
+    margin: 0 0 20px;
+    font-size: 1.5rem; /* Made headers slightly bigger */
+    font-weight: 600;
+  }
+
+  /* ===== CHART PLACEHOLDER ===== */
+  .chart-box {
+    width: 100%;
+    /* OPTIONAL: Increased height since the charts are now wider */
+    height: 400px; 
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b3b3b3;
+    font-size: 14px;
+    overflow: hidden; 
+  }
+
+  .chart-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* ===== FULL WIDTH SECTION ===== */
+  .viz-full {
+    margin-top: 40px;
+    background: rgba(0,0,0,0.75);
+    border-radius: 6px;
+    padding: 25px;
+  }
+
+  .viz-full h3 {
+    margin-bottom: 15px;
+  }
+</style>
+
+<h1 class="page-title">Data Visualization</h1>
+
+<div class="viz-grid">
+
+  <div class="viz-card">
+    <h3>Keywords Word Cloud</h3>
+    <div class="chart-box">      
+      <img src="{{ url_for('static', path='visualize/keyword_wordcloud.png') }}">
+    </div>
+  </div>
+
+  <div class="viz-card">
+    <h3>Average Movie Runtime Over Time</h3>
+    <div class="chart-box">
+      <img src="{{ url_for('static', path='visualize/average_runtime.png') }}">
+    </div>
+  </div>
+
+  <div class="viz-card">
+    <h3>Distribution of Ratings per Year</h3>
+    <div class="chart-box">
+      <img src="{{ url_for('static', path='visualize/ratings_distribution_through_years.png') }}">
+    </div>
+  </div>
+
+  <div class="viz-card">
+    <h3>Top 15 Movie Genres (Treemap)</h3>
+    <div class="chart-box">
+      <img src="{{ url_for('static', path='visualize/top_15_genres.png') }}">
+    </div>
+  </div>
+
+  <div class="viz-card">
+    <h3>Average Rating by Genre</h3>
+    <div class="chart-box">
+      <img src="{{ url_for('static', path='visualize/average_rating_by_generes.png') }}">
+    </div>
+  </div>
+
+  <div class="viz-card">
+    <h3>Top 20 Most Frequent Keywords</h3>
+    <div class="chart-box">
+      <img src="{{ url_for('static', path='visualize/20_frequent_keywords.png') }}">
+    </div>
+  </div>
+
+</div>
+
+<div class="viz-full">
+  <h3>Recommendation Model Insights</h3>
+  <div class="chart-box" style="height:360px;">
+    <img src="{{ url_for('static', path='visualize/evaluation.png') }}">
+  </div>
+</div>
+
+{% endblock %}

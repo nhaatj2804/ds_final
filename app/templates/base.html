@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>{% block title %}B22DCAT208 Nguyễn Ngọc Nhật{% endblock %}</title>
+  <style>
+    /* --- RESET & BASIC --- */
+    body {
+      background-color: #141414;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* --- NAVIGATION BAR --- */
+    nav {
+      background-color: #000; /* Black background like screenshot */
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Pushes content to edges */
+      padding: 0 4%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+      background-color: #141414;
+    }
+
+    /* LEFT SIDE: Links */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-logo {
+      color: #E50914;
+      font-size: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-right: 20px;
+    }
+
+    .nav-link {
+      color: #e5e5e5;
+      text-decoration: none;
+      font-size: 20px;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #b3b3b3;
+    }
+
+    /* RIGHT SIDE: Profile & Icons */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icon {
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* --- PROFILE DROPDOWN --- */
+    .profile-menu {
+      position: relative; /* Anchor for the dropdown */
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      /* Default Netflix Avatar Image */
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png');
+      background-size: cover;
+    }
+
+    .caret {
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+
+    .profile-menu:hover .caret {
+      transform: rotate(180deg);
+    }
+
+    /* The Dropdown Box */
+    .dropdown-content {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 50px; /* Push it down below the avatar */
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      border: 1px solid #333;
+      min-width: 180px;
+      padding: 10px 0;
+      z-index: 200;
+    }
+
+    /* Show dropdown on hover */
+    .profile-menu:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Dropdown Items */
+    .dropdown-item {
+      display: block;
+      padding: 10px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    
+    .dropdown-item:hover {
+      text-decoration: underline;
+    }
+    
+    .user-info {
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #b3b3b3;
+      border-bottom: 1px solid #333;
+      margin-bottom: 5px;
+      cursor: default;
+    }
+
+    /* --- MAIN CONTENT --- */
+    .main-container {
+      padding: 20px 4%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="/recommend" class="nav-logo">B22DCAT208</a>
+      <a href="/recommend" class="nav-link">Recommend</a>
+      <a href="/visualize" class="nav-link">Visualize</a>
+      <a href="/all-movies" class="nav-link">All Movies</a>
+
+    </div>
+
+    <div class="nav-right">
+      
+      <div class="profile-menu">
+        <div class="profile-avatar"></div>
+        <i class="fas fa-caret-down caret"></i>
+        
+        <div class="dropdown-content">
+          {% if request.session.get("user_id") %}
+             <div class="user-info">
+               User ID: <strong>{{ request.session.get("user_id") }}</strong>
+             </div>
+          {% else %}
+             <a href="/" class="dropdown-item">Sign In</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>
